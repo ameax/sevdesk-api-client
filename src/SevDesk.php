@@ -23,6 +23,7 @@ use Ameax\SevDeskApi\Resource\Report;
 use Ameax\SevDeskApi\Resource\Tag;
 use Ameax\SevDeskApi\Resource\Voucher;
 use Ameax\SevDeskApi\Resource\VoucherPos;
+use Saloon\Contracts\ArrayStore;
 use Saloon\Http\Connector;
 use Saloon\Traits\Plugins\AcceptsJson;
 
@@ -147,11 +148,6 @@ class SevDesk extends Connector
 	protected string $baseUrl = 'https://my.sevdesk.de/api/v1';
 
 	/**
-	 * Additional configuration options
-	 */
-	protected array $config = [];
-
-	/**
 	 * Create a new SevDesk connector instance
 	 * 
 	 * @param string|array|null $apiTokenOrConfig API token string or full config array
@@ -159,14 +155,25 @@ class SevDesk extends Connector
 	 */
 	public function __construct($apiTokenOrConfig = null, array $config = [])
 	{
+		parent::__construct();
+		
 		if (is_array($apiTokenOrConfig)) {
-			$this->config = $apiTokenOrConfig;
-			$this->apiToken = $this->config['api_token'] ?? $this->config['token'] ?? null;
-			$this->baseUrl = $this->config['base_url'] ?? $this->baseUrl;
+			$configData = $apiTokenOrConfig;
+			$this->apiToken = $configData['api_token'] ?? $configData['token'] ?? null;
+			$this->baseUrl = $configData['base_url'] ?? $this->baseUrl;
+			
+			// Store config data in parent's config property
+			foreach ($configData as $key => $value) {
+				$this->config()->set($key, $value);
+			}
 		} else {
 			$this->apiToken = $apiTokenOrConfig;
-			$this->config = $config;
 			$this->baseUrl = $config['base_url'] ?? $this->baseUrl;
+			
+			// Store config data in parent's config property
+			foreach ($config as $key => $value) {
+				$this->config()->set($key, $value);
+			}
 		}
 	}
 
@@ -181,7 +188,7 @@ class SevDesk extends Connector
 	protected function defaultHeaders(): array
 	{
 		$headers = [
-			'User-Agent' => $this->config['user_agent'] ?? 'sevdesk-api-client by Ameax',
+			'User-Agent' => $this->config()->get('user_agent', 'sevdesk-api-client by Ameax'),
 		];
 
 		if ($this->apiToken) {
@@ -197,10 +204,10 @@ class SevDesk extends Connector
 	public function getConfig(string $key = null, $default = null)
 	{
 		if ($key === null) {
-			return $this->config;
+			return $this->config()->all();
 		}
 
-		return $this->config[$key] ?? $default;
+		return $this->config()->get($key, $default);
 	}
 
 	/**
@@ -208,7 +215,7 @@ class SevDesk extends Connector
 	 */
 	public function setConfig(string $key, $value): self
 	{
-		$this->config[$key] = $value;
+		$this->config()->set($key, $value);
 		return $this;
 	}
 
