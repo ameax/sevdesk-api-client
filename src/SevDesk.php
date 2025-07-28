@@ -155,8 +155,6 @@ class SevDesk extends Connector
 	 */
 	public function __construct($apiTokenOrConfig = null, array $config = [])
 	{
-		parent::__construct();
-		
 		if (is_array($apiTokenOrConfig)) {
 			$configData = $apiTokenOrConfig;
 			$this->apiToken = $configData['api_token'] ?? $configData['token'] ?? null;
