@@ -1,0 +1,44 @@
+{
+    "name": "ameax/sevdesk-api-client",
+    "description": "PHP client for SevDesk API integration using Saloon v3",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Schmidt",
+            "email": "69188126+ms-aranes@users.noreply.github.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "sammyjo20/saloon": "^3.0"
+    },
+    "suggest": {
+        "illuminate/support": "Required for Laravel integration (^10.0|^11.0)"
+    },
+    "require-dev": {
+        "crescat-io/saloon-sdk-generator": "^1.0",
+        "orchestra/testbench": "^8.0|^9.0",
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ameax\\SevDeskApi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ameax\\SevDeskApi\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ameax\\SevDeskApi\\SevDeskApiServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
