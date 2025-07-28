@@ -8,7 +8,7 @@ use Ameax\SevDeskApi\Requests\AccountingContact\GetAccountingContact;
 use Ameax\SevDeskApi\Requests\AccountingContact\GetAccountingContactById;
 use Ameax\SevDeskApi\Requests\AccountingContact\UpdateAccountingContact;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class AccountingContact extends Resource
 {

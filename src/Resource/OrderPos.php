@@ -7,7 +7,7 @@ use Ameax\SevDeskApi\Requests\OrderPos\GetOrderPositionById;
 use Ameax\SevDeskApi\Requests\OrderPos\GetOrderPositions;
 use Ameax\SevDeskApi\Requests\OrderPos\UpdateOrderPosition;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class OrderPos extends Resource
 {

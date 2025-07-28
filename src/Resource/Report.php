@@ -7,7 +7,7 @@ use Ameax\SevDeskApi\Requests\Report\ReportInvoice;
 use Ameax\SevDeskApi\Requests\Report\ReportOrder;
 use Ameax\SevDeskApi\Requests\Report\ReportVoucher;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class Report extends Resource
 {

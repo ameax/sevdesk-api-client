@@ -16,7 +16,7 @@ use Ameax\SevDeskApi\Requests\Order\OrderSendBy;
 use Ameax\SevDeskApi\Requests\Order\SendorderViaEmail;
 use Ameax\SevDeskApi\Requests\Order\UpdateOrder;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class Order extends Resource
 {

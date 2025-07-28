@@ -10,7 +10,7 @@ use Ameax\SevDeskApi\Requests\CheckAccount\GetCheckAccountById;
 use Ameax\SevDeskApi\Requests\CheckAccount\GetCheckAccounts;
 use Ameax\SevDeskApi\Requests\CheckAccount\UpdateCheckAccount;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class CheckAccount extends Resource
 {

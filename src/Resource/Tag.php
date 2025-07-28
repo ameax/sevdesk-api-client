@@ -9,7 +9,7 @@ use Ameax\SevDeskApi\Requests\Tag\GetTagRelations;
 use Ameax\SevDeskApi\Requests\Tag\GetTags;
 use Ameax\SevDeskApi\Requests\Tag\UpdateTag;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class Tag extends Resource
 {

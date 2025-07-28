@@ -9,7 +9,7 @@ use Ameax\SevDeskApi\Requests\CommunicationWay\GetCommunicationWayKeys;
 use Ameax\SevDeskApi\Requests\CommunicationWay\GetCommunicationWays;
 use Ameax\SevDeskApi\Requests\CommunicationWay\UpdateCommunicationWay;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class CommunicationWay extends Resource
 {

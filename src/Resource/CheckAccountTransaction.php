@@ -9,7 +9,7 @@ use Ameax\SevDeskApi\Requests\CheckAccountTransaction\GetCheckAccountTransaction
 use Ameax\SevDeskApi\Requests\CheckAccountTransaction\GetTransactions;
 use Ameax\SevDeskApi\Requests\CheckAccountTransaction\UpdateCheckAccountTransaction;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class CheckAccountTransaction extends Resource
 {

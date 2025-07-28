@@ -18,7 +18,7 @@ use Ameax\SevDeskApi\Requests\CreditNote\SendCreditNoteByPrinting;
 use Ameax\SevDeskApi\Requests\CreditNote\SendCreditNoteViaEmail;
 use Ameax\SevDeskApi\Requests\CreditNote\UpdatecreditNote;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class CreditNote extends Resource
 {

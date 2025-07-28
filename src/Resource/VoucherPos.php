@@ -4,7 +4,7 @@ namespace Ameax\SevDeskApi\Resource;
 
 use Ameax\SevDeskApi\Requests\VoucherPos\GetVoucherPositions;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class VoucherPos extends Resource
 {

@@ -8,7 +8,7 @@ use Ameax\SevDeskApi\Requests\ContactAddress\DeleteContactAddress;
 use Ameax\SevDeskApi\Requests\ContactAddress\GetContactAddresses;
 use Ameax\SevDeskApi\Requests\ContactAddress\UpdateContactAddress;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class ContactAddress extends Resource
 {

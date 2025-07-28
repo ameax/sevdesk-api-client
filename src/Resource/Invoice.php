@@ -20,7 +20,7 @@ use Ameax\SevDeskApi\Requests\Invoice\InvoiceResetToOpen;
 use Ameax\SevDeskApi\Requests\Invoice\InvoiceSendBy;
 use Ameax\SevDeskApi\Requests\Invoice\SendInvoiceViaEmail;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class Invoice extends Resource
 {

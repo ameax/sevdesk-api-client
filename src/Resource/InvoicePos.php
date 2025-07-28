@@ -4,7 +4,7 @@ namespace Ameax\SevDeskApi\Resource;
 
 use Ameax\SevDeskApi\Requests\InvoicePos\GetInvoicePos;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class InvoicePos extends Resource
 {

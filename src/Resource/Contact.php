@@ -12,7 +12,7 @@ use Ameax\SevDeskApi\Requests\Contact\GetContacts;
 use Ameax\SevDeskApi\Requests\Contact\GetNextCustomerNumber;
 use Ameax\SevDeskApi\Requests\Contact\UpdateContact;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class Contact extends Resource
 {

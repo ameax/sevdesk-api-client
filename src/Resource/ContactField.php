@@ -15,7 +15,7 @@ use Ameax\SevDeskApi\Requests\ContactField\GetReferenceCount;
 use Ameax\SevDeskApi\Requests\ContactField\UpdateContactFieldSetting;
 use Ameax\SevDeskApi\Requests\ContactField\UpdateContactfield;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class ContactField extends Resource
 {

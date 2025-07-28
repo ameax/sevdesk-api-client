@@ -4,7 +4,7 @@ namespace Ameax\SevDeskApi\Resource;
 
 use Ameax\SevDeskApi\Requests\Basics\BookkeepingSystemVersion;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class Basics extends Resource
 {

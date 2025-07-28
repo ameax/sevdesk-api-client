@@ -8,7 +8,7 @@ use Ameax\SevDeskApi\Requests\Part\GetParts;
 use Ameax\SevDeskApi\Requests\Part\PartGetStock;
 use Ameax\SevDeskApi\Requests\Part\UpdatePart;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class Part extends Resource
 {

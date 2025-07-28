@@ -17,7 +17,7 @@ use Ameax\SevDeskApi\Requests\Export\GetProgress;
 use Ameax\SevDeskApi\Requests\Export\JobDownloadInfo;
 use Ameax\SevDeskApi\Requests\Export\UpdateExportConfig;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class Export extends Resource
 {

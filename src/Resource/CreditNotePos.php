@@ -4,7 +4,7 @@ namespace Ameax\SevDeskApi\Resource;
 
 use Ameax\SevDeskApi\Requests\CreditNotePos\GetcreditNotePositions;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class CreditNotePos extends Resource
 {

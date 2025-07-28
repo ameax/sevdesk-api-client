@@ -8,7 +8,7 @@ use Ameax\SevDeskApi\Requests\Layout\UpdateCreditNoteTemplate;
 use Ameax\SevDeskApi\Requests\Layout\UpdateInvoiceTemplate;
 use Ameax\SevDeskApi\Requests\Layout\UpdateOrderTemplate;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class Layout extends Resource
 {

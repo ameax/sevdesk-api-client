@@ -17,7 +17,7 @@ use Ameax\SevDeskApi\Requests\Voucher\VoucherResetToDraft;
 use Ameax\SevDeskApi\Requests\Voucher\VoucherResetToOpen;
 use Ameax\SevDeskApi\Requests\Voucher\VoucherUploadFile;
 use Ameax\SevDeskApi\Resource;
-use Saloon\Contracts\Response;
+use Saloon\Http\Response;
 
 class Voucher extends Resource
 {
