@@ -19,18 +19,19 @@ The following tax rules are available in the SevDesk API:
 | 3 | `TAX_FREE_EU` | Tax-free export to EU | Steuerfreie Ausfuhr EU |
 | 4 | `TAX_FREE_NON_EU` | Tax-free export to non-EU | Steuerfreie Ausfuhr Drittland |
 | 5 | `REVERSE_CHARGE` | Reverse charge procedure | Reverse Charge gem. §13b UStG |
+| 8 | `INNER_COMMUNITY_ACQUISITION_EXPENSE` | Inner-community acquisitions (expense) | Innergemeinschaftliche Erwerbe |
+| 9 | `CREDIT_NOTE_STANDARD` | Tax rule for credit notes | Used specifically for credit notes |
+| 10 | `NON_DEDUCTIBLE_EXPENSES` | Non-deductible expenses | Nicht vorsteuerabziehbare Aufwendungen |
 | 11 | `SMALL_BUSINESS` | Small business regulation | Steuer nicht erhoben nach §19 UStG (Kleinunternehmer) |
+| 12 | `REVERSE_CHARGE_WITH_INPUT_TAX` | Reverse Charge with input tax deduction | Reverse Charge gem. §13b Abs. 2 UStG mit Vorsteuerabzug 0% (19%) |
+| 13 | `REVERSE_CHARGE_WITHOUT_INPUT_TAX` | Reverse Charge without input tax deduction | Reverse Charge gem. §13b UStG ohne Vorsteuerabzug 0% (19%) |
+| 14 | `REVERSE_CHARGE_EU` | Reverse Charge for EU transactions | Reverse Charge gem. §13b Abs. 1 EU Umsätze 0% (19%) |
 | 17 | `INNER_COMMUNITY_ACQUISITION` | Inner-community acquisition | Innergemeinschaftlicher Erwerb |
 | 18 | `TAX_FREE_PARAGRAPH_4` | Tax-free according to §4 Nr. 8ff UStG | Steuerfrei nach §4 Nr. 8ff UStG |
 | 19 | `CONSTRUCTION_SERVICES` | Construction services according to §13b UStG | Bauleistungen gem. §13b UStG |
 | 20 | `TRIANGULAR_TRANSACTION` | Inner-community triangular transaction | Innergemeinschaftliches Dreiecksgeschäft |
 | 21 | `OTHER_SERVICES` | Other services according to §13b UStG | Sonstige Leistungen gem. §13b UStG |
 
-### Special Tax Rules (Discovered in Practice)
-
-| ID | Constant Name | Description | Usage |
-|----|--------------|-------------|-------|
-| 9 | `CREDIT_NOTE_STANDARD` | Tax rule for credit notes | Used specifically for credit notes |
 
 ## Usage Examples
 
@@ -89,6 +90,91 @@ $invoiceData = [
     ]
 ];
 ```
+
+### For Reverse Charge Scenarios
+
+```php
+use Ameax\SevDeskApi\Enums\TaxRule;
+
+// For EU services with reverse charge
+$invoiceData = [
+    'invoice' => [
+        // ... other fields
+        'taxRule' => [
+            'id' => (string) TaxRule::REVERSE_CHARGE_EU, // ID 14
+            'objectName' => 'TaxRule'
+        ],
+        'taxRate' => 0, // Always 0% for reverse charge
+        // ...
+    ]
+];
+
+// For construction services
+$invoiceData = [
+    'invoice' => [
+        // ... other fields
+        'taxRule' => [
+            'id' => (string) TaxRule::CONSTRUCTION_SERVICES, // ID 19
+            'objectName' => 'TaxRule'
+        ],
+        'taxRate' => 0, // Construction services use 0% with reverse charge
+        // ...
+    ]
+];
+```
+
+### For Expenses (Vouchers)
+
+```php
+use Ameax\SevDeskApi\Enums\TaxRule;
+
+// For non-deductible expenses
+$voucherData = [
+    'voucher' => [
+        // ... other fields
+        'taxRule' => [
+            'id' => (string) TaxRule::NON_DEDUCTIBLE_EXPENSES, // ID 10
+            'objectName' => 'TaxRule'
+        ],
+        'taxRate' => 0, // Always 0% for non-deductible expenses
+        // ...
+    ]
+];
+
+// For inner-community acquisitions
+$voucherData = [
+    'voucher' => [
+        // ... other fields
+        'taxRule' => [
+            'id' => (string) TaxRule::INNER_COMMUNITY_ACQUISITION_EXPENSE, // ID 8
+            'objectName' => 'TaxRule'
+        ],
+        'taxRate' => 19, // Can be 0%, 7%, or 19%
+        // ...
+    ]
+];
+```
+
+## Tax Rule and Tax Rate Compatibility
+
+Not all tax rates are compatible with all tax rules. Here are the allowed combinations:
+
+| Tax Rule | Allowed Tax Rates | Notes |
+|----------|-------------------|-------|
+| STANDARD (1) | 7%, 19% | Standard German VAT rates |
+| REDUCED (2) | 7% | Reduced rate only |
+| TAX_FREE_EU (3) | 0% | Always 0% for tax-free exports |
+| TAX_FREE_NON_EU (4) | 0% | Always 0% for tax-free exports |
+| REVERSE_CHARGE (5) | 0% | Always 0% for reverse charge |
+| INNER_COMMUNITY_ACQUISITION_EXPENSE (8) | 0%, 7%, 19% | All rates allowed |
+| CREDIT_NOTE_STANDARD (9) | 0%, 7%, 19% | Typically matches original invoice |
+| NON_DEDUCTIBLE_EXPENSES (10) | 0% | Always 0% |
+| SMALL_BUSINESS (11) | 0% | Always 0% for Kleinunternehmer |
+| REVERSE_CHARGE_WITH_INPUT_TAX (12) | 0% | Always 0% |
+| REVERSE_CHARGE_WITHOUT_INPUT_TAX (13) | 0% | Always 0% |
+| REVERSE_CHARGE_EU (14) | 0% | Always 0% |
+| CONSTRUCTION_SERVICES (19) | 0% | Always 0% |
+| Other reverse charge rules | 0% | Generally 0% for reverse charge |
 
 ## Important Notes
 
