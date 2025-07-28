@@ -9,7 +9,7 @@ This is a PHP client package for integrating with the SevDesk API using Saloon v
 ## Technology Stack
 
 - PHP 8.1+
-- Laravel 10.x/11.x
+- Laravel 10.x/11.x (optional)
 - Saloon 3.0 (HTTP client library)
 - PHPUnit 10.0 with Orchestra Testbench
 
@@ -44,18 +44,21 @@ composer dump-autoload
 ## Code Architecture
 
 ### Saloon Structure
-The package follows Saloon's recommended architecture:
+The package follows Saloon v3's recommended architecture:
 
-1. **Connectors** (`src/Connectors/`): Base API connector classes that define the API base URL, headers, and authentication
-2. **Requests** (`src/Requests/`): Individual API endpoint request classes
-3. **Resources** (`src/Resources/`): Logical groupings of related requests (e.g., ContactResource, InvoiceResource)
-4. **Data** (`src/Data/`): Data Transfer Objects (DTOs) for type-safe request/response handling
-5. **Enums** (`src/Enums/`): Enumeration classes for API constants
+1. **Main Connector** (`src/SevDesk.php`): The primary entry point that extends Saloon's Connector class
+2. **Requests** (`src/Requests/`): Individual API endpoint request classes organized by feature area
+3. **Resources** (`src/Resource/`): Logical groupings of related requests (note: singular "Resource" directory)
+4. **Enums** (`src/Enums/`): Constant classes for API values organized by:
+   - `Status/` - Status values for various entities (Invoice, Order, Voucher, etc.)
+   - `Type/` - Type values for different API objects
+   - Root level - Other API constants (ObjectName, TaxRule, etc.)
 
 ### Laravel Integration
 - Service Provider: `Ameax\SevDeskApi\SevDeskApiServiceProvider`
-- Configuration: Published to `config/sevdesk.php` (when implemented)
+- Configuration: Published to `config/sevdesk.php`
 - Namespace: `Ameax\SevDeskApi`
+- Auto-discovery: Enabled via composer.json
 
 ### OpenAPI Resources
 - OpenAPI specifications are stored in `resources/openapi/` with timestamps
@@ -68,8 +71,8 @@ The package follows Saloon's recommended architecture:
 1. Create a Request class in `src/Requests/` extending Saloon's Request class
 2. Define the HTTP method and endpoint
 3. Add any required parameters, query parameters, or body data
-4. Create corresponding DTO in `src/Data/` if handling structured responses
-5. Add the request to the appropriate Resource class
+4. Add the request to the appropriate Resource class
+5. Use enum constants from `src/Enums/` for type-safe values
 
 ### Testing Approach
 - Unit tests for individual components in `tests/Unit/`
@@ -81,6 +84,36 @@ The package follows Saloon's recommended architecture:
 - API Documentation: https://api.sevdesk.de/
 - Authentication: API token-based
 - Base URL: https://my.sevdesk.de/api/v1/
+
+## Available Enum Constants
+
+### Status Enums (`src/Enums/Status/`)
+- `InvoiceStatus` - Invoice statuses (DRAFT, OPEN, SENT, PARTIAL, CANCELLED)
+- `OrderStatus` - Order statuses (DRAFT, SENT, ACCEPTED, PARTIALLY_DELIVERED, DELIVERED, CANCELLED)
+- `CreditNoteStatus` - Credit note statuses (DRAFT, OPEN, SENT, PARTIALLY_PAID, PAID, CANCELLED)
+- `VoucherStatus` - Voucher statuses (DRAFT, OPEN, PAID)
+- `CheckAccountStatus` - Bank account statuses (ARCHIVED, ACTIVE)
+- `CheckAccountTransactionStatus` - Transaction statuses (CREATED, LINKED, PRIVATE, AUTO_BOOKED, BOOKED)
+- `PartStatus` - Product/service statuses (INACTIVE, ACTIVE)
+
+### Type Enums (`src/Enums/Type/`)
+- `InvoiceType` - Invoice types (INVOICE, RECURRING, CANCELLATION, REMINDER, PARTIAL, ADVANCE_PAYMENT, FINAL)
+- `OrderType` - Order types (QUOTE, ORDER, DELIVERY_NOTE)
+- `CommunicationWayType` - Communication types (EMAIL, PHONE, WEB, MOBILE)
+- `SendType` - Document send types (PRINT, POSTAL, EMAIL, PDF)
+- `VoucherType` - Voucher types (VOUCHER, SUPPLIER_INVOICE)
+- `CheckAccountType` - Bank account types (ONLINE, OFFLINE, REGISTER)
+- `TaxType` - Tax types (DEFAULT, EU, NON_EU, CUSTOM)
+
+### Other Enums (`src/Enums/`)
+- `ObjectName` - API object names (INVOICE, ORDER, CONTACT, etc.)
+- `TaxRule` - German tax rule IDs (STANDARD, REDUCED, TAX_FREE_EU, etc.)
+- `CreditDebit` - Accounting indicators (CREDIT, DEBIT)
+- `RecurringInterval` - Recurring intervals (WEEKLY, MONTHLY, QUARTERLY, etc.)
+- `BookingCategory` - Booking categories (PROVISION, ROYALTY_ASSIGNED, etc.)
+- `CommunicationWayKey` - Contact categories (WORK, MOBILE, PRIVATE, etc.)
+- `ImportType` - Import formats (CSV, MT940)
+- `Version` - API versions (V1, V2)
 
 ## SDK Usage Examples
 
@@ -129,6 +162,10 @@ public function __construct(private SevDesk $sevdesk) {}
 
 ### API Examples
 ```php
+use Ameax\SevDeskApi\Enums\Status\InvoiceStatus;
+use Ameax\SevDeskApi\Enums\Type\SendType;
+use Ameax\SevDeskApi\Enums\ObjectName;
+
 // Get contacts with filtering
 $response = $sevdesk->contact()->getContacts([
     'depth' => 1,
@@ -136,24 +173,32 @@ $response = $sevdesk->contact()->getContacts([
     'offset' => 0,
 ]);
 
-// Create invoice
+// Create invoice using enum constants
 $response = $sevdesk->invoice()->createInvoiceByFactory([
     'invoice' => [
         'invoiceNumber' => 'RE-10001',
-        'contact' => ['id' => 123, 'objectName' => 'Contact'],
+        'contact' => ['id' => 123, 'objectName' => ObjectName::CONTACT],
         'invoiceDate' => date('Y-m-d'),
         'header' => 'Invoice Header',
-        'status' => 100, // Draft
+        'status' => InvoiceStatus::DRAFT,
     ],
     'invoicePosSave' => [
         [
             'quantity' => 1,
             'price' => 100.00,
             'name' => 'Service',
-            'unity' => ['id' => 1, 'objectName' => 'Unity'],
+            'unity' => ['id' => 1, 'objectName' => ObjectName::UNITY],
             'taxRate' => 19,
         ]
     ]
+]);
+
+// Send invoice by email
+$sevdesk->invoice()->sendInvoiceViaEmail($invoiceId, [
+    'toEmail' => 'customer@example.com',
+    'subject' => 'Your Invoice',
+    'text' => 'Please find your invoice attached.',
+    'sendType' => SendType::EMAIL,
 ]);
 ```
 
@@ -166,3 +211,33 @@ Each resource (Contact, Invoice, Order, etc.) has its own set of methods:
 - `creditNote()` - Manage credit notes
 - `checkAccount()` - Manage bank accounts
 - `part()` - Manage products/services
+- `accountingType()` - Manage accounting types
+- `checkAccountTransaction()` - Manage bank transactions
+- `communicationWay()` - Manage communication methods
+- `country()` - Country data
+- `deliveryNote()` - Manage delivery notes
+- `discounts()` - Manage discounts
+- `documentFolder()` - Document management
+- `export()` - Export functionality
+- `layout()` - Layout management
+- `orderPos()` - Order positions
+- `report()` - Reporting features
+- `supplier()` - Supplier management
+- `tag()` - Tag management
+- `unity()` - Units of measurement
+
+## Environment Variables
+
+For Laravel projects, configure these in your `.env`:
+```
+SEVDESK_API_TOKEN=your_32_character_hexadecimal_token
+SEVDESK_BASE_URL=https://my.sevdesk.de/api/v1  # optional
+SEVDESK_TIMEOUT=30                              # optional
+SEVDESK_RETRY_TIMES=3                           # optional
+SEVDESK_RETRY_SLEEP=1000                        # optional
+```
+
+## Known Issues
+
+1. **No Tests**: Test directories exist but no test files have been created yet.
+2. **No phpunit.xml**: PHPUnit configuration file is missing.
