@@ -42,4 +42,11 @@ class TaxRule
     
     /** Other services according to §13b UStG */
     public const OTHER_SERVICES = 21;
+    
+    /** 
+     * Tax rule for credit notes
+     * This appears to be used specifically for credit notes in SevDesk
+     * Not documented in official API but found in practice
+     */
+    public const CREDIT_NOTE_STANDARD = 9;
 }
