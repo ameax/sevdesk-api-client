@@ -1,0 +1,12 @@
+parameters:
+    level: 8
+    paths:
+        - src/SevDesk.php
+        - src/SevDeskApiServiceProvider.php
+        - src/Enums/
+        - src/Resource.php
+    excludePaths:
+        - src/Requests/
+        - src/Resource/
+        - src/Connectors/
+        - src/Resources/

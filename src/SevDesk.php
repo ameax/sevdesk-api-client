@@ -150,8 +150,8 @@ class SevDesk extends Connector
 	/**
 	 * Create a new SevDesk connector instance
 	 * 
-	 * @param string|array|null $apiTokenOrConfig API token string or full config array
-	 * @param array $config Additional configuration (if first param is string)
+	 * @param string|array<string, mixed>|null $apiTokenOrConfig API token string or full config array
+	 * @param array<string, mixed> $config Additional configuration (if first param is string)
 	 */
 	public function __construct($apiTokenOrConfig = null, array $config = [])
 	{
@@ -162,7 +162,7 @@ class SevDesk extends Connector
 			
 			// Store config data in parent's config property
 			foreach ($configData as $key => $value) {
-				$this->config()->set($key, $value);
+				$this->config()->set([$key => $value]);
 			}
 		} else {
 			$this->apiToken = $apiTokenOrConfig;
@@ -170,7 +170,7 @@ class SevDesk extends Connector
 			
 			// Store config data in parent's config property
 			foreach ($config as $key => $value) {
-				$this->config()->set($key, $value);
+				$this->config()->set([$key => $value]);
 			}
 		}
 	}
@@ -198,8 +198,10 @@ class SevDesk extends Connector
 
 	/**
 	 * Get configuration value
+	 * 
+	 * @return mixed
 	 */
-	public function getConfig(string $key = null, $default = null)
+	public function getConfig(string $key = null, mixed $default = null): mixed
 	{
 		if ($key === null) {
 			return $this->config()->all();
@@ -211,9 +213,9 @@ class SevDesk extends Connector
 	/**
 	 * Set configuration value
 	 */
-	public function setConfig(string $key, $value): self
+	public function setConfig(string $key, mixed $value): self
 	{
-		$this->config()->set($key, $value);
+		$this->config()->set([$key => $value]);
 		return $this;
 	}
 
