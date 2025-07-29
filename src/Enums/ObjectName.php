@@ -47,4 +47,7 @@ class ObjectName
     
     /** Tag object */
     public const TAG = 'Tag';
+    
+    /** Static country object */
+    public const STATIC_COUNTRY = 'StaticCountry';
 }
