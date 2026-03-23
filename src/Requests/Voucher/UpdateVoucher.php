@@ -3,8 +3,10 @@
 namespace Ameax\SevDeskApi\Requests\Voucher;
 
 use DateTime;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Traits\Body\HasJsonBody;
 
 /**
  * updateVoucher
@@ -13,8 +15,10 @@ use Saloon\Http\Request;
  * Complex changes like adding a position should use /Voucher/Factory/saveVoucher.<br> You can not
  * change the status using this endpoint.
  */
-class UpdateVoucher extends Request
+class UpdateVoucher extends Request implements HasBody
 {
+	use HasJsonBody;
+
 	protected Method $method = Method::PUT;
 
 

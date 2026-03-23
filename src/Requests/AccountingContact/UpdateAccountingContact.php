@@ -3,8 +3,10 @@
 namespace Ameax\SevDeskApi\Requests\AccountingContact;
 
 use DateTime;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Traits\Body\HasJsonBody;
 
 /**
  * updateAccountingContact
@@ -13,8 +15,10 @@ use Saloon\Http\Request;
  * **DATEV export**.
  * Compatibility of sevdesk with DATEV is no longer guaranteed.
  */
-class UpdateAccountingContact extends Request
+class UpdateAccountingContact extends Request implements HasBody
 {
+	use HasJsonBody;
+
 	protected Method $method = Method::PUT;
 
 

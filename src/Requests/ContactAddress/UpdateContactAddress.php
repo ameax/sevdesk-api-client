@@ -3,16 +3,20 @@
 namespace Ameax\SevDeskApi\Requests\ContactAddress;
 
 use DateTime;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Traits\Body\HasJsonBody;
 
 /**
  * updateContactAddress
  *
  * update a existing contact address.
  */
-class UpdateContactAddress extends Request
+class UpdateContactAddress extends Request implements HasBody
 {
+	use HasJsonBody;
+
 	protected Method $method = Method::PUT;
 
 

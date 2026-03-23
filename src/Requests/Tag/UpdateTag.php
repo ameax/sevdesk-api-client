@@ -3,16 +3,20 @@
 namespace Ameax\SevDeskApi\Requests\Tag;
 
 use DateTime;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Traits\Body\HasJsonBody;
 
 /**
  * updateTag
  *
  * Update an existing tag
  */
-class UpdateTag extends Request
+class UpdateTag extends Request implements HasBody
 {
+	use HasJsonBody;
+
 	protected Method $method = Method::PUT;
 
 

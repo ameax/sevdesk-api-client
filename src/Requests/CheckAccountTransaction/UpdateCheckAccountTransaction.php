@@ -3,16 +3,20 @@
 namespace Ameax\SevDeskApi\Requests\CheckAccountTransaction;
 
 use DateTime;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Traits\Body\HasJsonBody;
 
 /**
  * updateCheckAccountTransaction
  *
  * Update a check account transaction
  */
-class UpdateCheckAccountTransaction extends Request
+class UpdateCheckAccountTransaction extends Request implements HasBody
 {
+	use HasJsonBody;
+
 	protected Method $method = Method::PUT;
 
 

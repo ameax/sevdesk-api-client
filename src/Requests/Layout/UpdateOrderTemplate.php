@@ -3,16 +3,20 @@
 namespace Ameax\SevDeskApi\Requests\Layout;
 
 use DateTime;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Traits\Body\HasJsonBody;
 
 /**
  * updateOrderTemplate
  *
  * Update an existing order template
  */
-class UpdateOrderTemplate extends Request
+class UpdateOrderTemplate extends Request implements HasBody
 {
+	use HasJsonBody;
+
 	protected Method $method = Method::PUT;
 
 

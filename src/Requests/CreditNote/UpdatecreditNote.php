@@ -3,16 +3,20 @@
 namespace Ameax\SevDeskApi\Requests\CreditNote;
 
 use DateTime;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Traits\Body\HasJsonBody;
 
 /**
  * updatecreditNote
  *
  * Update a creditNote
  */
-class UpdatecreditNote extends Request
+class UpdatecreditNote extends Request implements HasBody
 {
+	use HasJsonBody;
+
 	protected Method $method = Method::PUT;
 
 
